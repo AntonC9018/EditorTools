@@ -19,7 +19,10 @@ struct Context
         string tempDirectory = "temp";
 
         @("Build output directory")
-        string buildDirectory = "build";
+        string buildDirectory = "build_folder";
+
+        @("Name of Unity Project directory")
+        string unityProjectDirectoryName = "EditorTools";
     }
 
     int onExecute()
@@ -46,7 +49,7 @@ struct Context
         }
 
 
-        if (!exists(projectDirectory.chainPath("game")))
+        if (!exists(projectDirectory.chainPath(unityProjectDirectoryName)))
         {
             writeln("Please run the tool in the root directory of the project, or specify it as an argument.");
             errorCount++;

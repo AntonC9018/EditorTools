@@ -83,9 +83,9 @@ struct KariRun
         string kariExecutablePath = buildPath(
             context.buildDirectory, "bin", "Kari.Generator", context.configuration, "net6.0", "Kari.Generator");
         version (Windows)
-            kariExecutablePath += ".exe";
+            kariExecutablePath ~= ".exe";
 
-        string[] usedKariPlugins = ["DataObject", "Flags", "UnityHelpers", "Terminal"];
+        string[] usedKariPlugins = [];
         string[] customPlugins;
 
         string getPluginDllPath(string pluginName, string pluginDllName)
@@ -103,7 +103,7 @@ struct KariRun
             // TODO: Improve Kari's argument parsing capabilities, or call it directly
             auto pid = spawnProcess2([
                     kariExecutablePath,
-                    "-configurationFile", buildPath(context.projectDirectory, "game", "kari.json"),
+                    "-configurationFile", buildPath(context.projectDirectory, context.unityProjectDirectoryName, "kari.json"),
                     "-pluginPaths", 
                         chain(
                             usedKariPlugins.map!(p => getPluginDllPath(p, "Kari.Plugins." ~ p ~ ".dll")),
